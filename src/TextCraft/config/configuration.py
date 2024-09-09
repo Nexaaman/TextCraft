@@ -1,4 +1,4 @@
-from TextCraft.entity import DataIngectionConfig
+from TextCraft.entity import (DataIngectionConfig, DataValidationConfig)
 
 from TextCraft.constants import *
 from TextCraft.utils.common import read_yaml, create_directories
@@ -23,3 +23,14 @@ class ConfigurationManager:
         )
 
         return data_ingestion_config
+    
+    def get_dataValidation_config(self) -> DataValidationConfig:
+        config = self.config.data_validation
+        create_directories([config.root_dir])
+
+        get_validation_config = DataValidationConfig(
+            root_dir= config.root_dir,
+            status= config.status,
+            REQUIRED_FILES = config.REQUIRED_FILES
+        )
+        return get_validation_config

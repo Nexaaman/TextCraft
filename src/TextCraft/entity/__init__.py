@@ -8,3 +8,10 @@ class DataIngectionConfig:
     source_URL: str
     local_path: Path
     unzip_dir: Path
+
+@dataclass(frozen=True)
+class DataValidationConfig:
+    root_dir: Path
+    status: Path
+    REQUIRED_FILES: list
+

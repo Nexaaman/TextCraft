@@ -5,3 +5,9 @@ data_ingestion:
   source_URL: https://drive.usercontent.google.com/download?id=1rPb8C731hiGZczce-fmOvF2x4kAnt8Mq&export=download&authuser=0
   local_path: artifacts/data_ingestion/Text.zip
   unzip_dir: artifacts/data_ingestion
+
+
+data_validation:
+  root_dir: artifacts/data_validation
+  status: artifacts/data_validation/status.txt
+  REQUIRED_FILES: ["train.csv", "test.csv", "validation.csv"]
