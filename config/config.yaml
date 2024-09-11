@@ -2,12 +2,19 @@ artifacts_root: artifacts
 
 data_ingestion:
   root_dir: artifacts/data_ingestion
-  source_URL: https://drive.usercontent.google.com/download?id=1rPb8C731hiGZczce-fmOvF2x4kAnt8Mq&export=download&authuser=0
-  local_path: artifacts/data_ingestion/Text.zip
+  source_URL: https://github.com/Nexaaman/Event_Page/raw/main/Dataset.zip
+  local_path: artifacts/data_ingestion/Dataset.zip
   unzip_dir: artifacts/data_ingestion
 
 
 data_validation:
   root_dir: artifacts/data_validation
   status: artifacts/data_validation/status.txt
-  REQUIRED_FILES: ["train.csv", "test.csv", "validation.csv"]
+  REQUIRED_FILES: ["train", "test", "validation"]
+
+
+data_tranformation:
+  root_dir: artifacts/data_transformation
+  data_path: artifacts/data_ingestion/Dataset
+  tokenizer: openai-community/gpt2
+  model: openai-community/gpt2

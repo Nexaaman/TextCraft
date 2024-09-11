@@ -15,3 +15,9 @@ class DataValidationConfig:
     status: Path
     REQUIRED_FILES: list
 
+@dataclass
+class DataTransformationConfig:
+    root_dir: Path
+    data_path: Path
+    tokenizer: str
+    model: str

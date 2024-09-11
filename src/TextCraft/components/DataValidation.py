@@ -9,7 +9,7 @@ class DataValidation:
     def validation_validate(self) -> bool:
         try:
             validation_status = None
-            files = os.listdir(os.path.join("artifacts", "data_ingestion", "Text"))
+            files = os.listdir(os.path.join("artifacts", "data_ingestion", "Dataset"))
             print(files)
             for file in self.config.REQUIRED_FILES:
                 if file not in files:

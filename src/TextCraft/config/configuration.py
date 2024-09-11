@@ -1,4 +1,4 @@
-from TextCraft.entity import (DataIngectionConfig, DataValidationConfig)
+from TextCraft.entity import (DataIngectionConfig, DataValidationConfig, DataTransformationConfig)
 
 from TextCraft.constants import *
 from TextCraft.utils.common import read_yaml, create_directories
@@ -34,3 +34,15 @@ class ConfigurationManager:
             REQUIRED_FILES = config.REQUIRED_FILES
         )
         return get_validation_config
+
+    def get_data_transformation(self) -> DataTransformationConfig:
+        config = self.config.data_tranformation
+        create_directories([config.root_dir])
+
+        data_transformation_config = DataTransformationConfig(
+            root_dir = config.root_dir,
+            data_path= config.data_path,
+            tokenizer= config.tokenizer,
+            model= config.model
+        )
+        return data_transformation_config
