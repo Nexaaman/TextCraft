@@ -1,4 +1,4 @@
-from TextCraft.entity import (DataIngectionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig)
+from TextCraft.entity import (DataIngectionConfig, DataValidationConfig, DataTransformationConfig, ModelTrainerConfig,ModelEvaluationConfig)
 
 from TextCraft.constants import *
 from TextCraft.utils.common import read_yaml, create_directories
@@ -83,3 +83,17 @@ class ConfigurationManager:
             lora_dropout= peft_config.lora_dropout
         )
         return get_model_training_config
+    
+    def get_eval_config(self) -> ModelEvaluationConfig:
+        config = self.config.model_evaluation
+
+        create_directories([config.root_dir])
+
+        get_eval_config = ModelEvaluationConfig(
+            root_dir= config.root_dir,
+            data_path= config.data_path,
+            model_path= config.model_path,
+            tokenizer_path= config.tokenizer_path,
+            metric_file_name= config.metric_file_name
+        )
+        return get_eval_config
