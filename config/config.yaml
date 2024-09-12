@@ -18,3 +18,10 @@ data_tranformation:
   data_path: artifacts/data_ingestion/Dataset
   tokenizer: openai-community/gpt2
   model: openai-community/gpt2
+
+
+model_trainer:
+  root_dir: artifacts/model_trainer
+  data_path: artifacts/data_transformation/Dataset
+  model: openai-community/gpt2
+  tokenizer: openai-community/gpt2
