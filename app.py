@@ -1,37 +1,28 @@
-from fastapi import FastAPI 
+from fastapi import FastAPI, Request, Form
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import RedirectResponse, HTMLResponse
+from TextCraft.pipeline.Prediction import PredictionPipeline
 import uvicorn
-import sys
 import os
 
-from fastapi.templating import Jinja2Templates
-from starlette.responses import RedirectResponse
-from fastapi.responses import Response
-from TextCraft.pipeline.Prediction import PredictionPipeline
-
-text:str = "What is a large language model?"
+# Initialize the app and Jinja2 templates
 app = FastAPI()
+templates = Jinja2Templates(directory=os.path.join("UI" , "template"))
 
-@app.get("/", tags = ["authentication"])
-async def index():
-    return RedirectResponse(url="/docs")
+@app.get("/", response_class=HTMLResponse)
+async def get_form(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request, "output_text": ""})
 
-
-@app.get("/train")
-async def training():
+@app.post("/predict", response_class=HTMLResponse)
+async def predict_route(request: Request, user_input: str = Form(...)):
     try:
-        os.system("python3 main.py")
-        return Response("Traning Sucessfully!")
-    except Exception as e:
-        return Response(f"Error Occured! {e}")
-    
-@app.post("/predict")
-async def predict_route(text):
-    try:
+        # Perform prediction using your PredictionPipeline
         obj = PredictionPipeline()
-        text = obj.predict(text)
-        return text
+        generated_text = obj.predict(user_input)
+        # Return the template with the generated output
+        return templates.TemplateResponse("index.html", {"request": request, "output_text": generated_text})
     except Exception as e:
-        raise e
-    
+        return templates.TemplateResponse("index.html", {"request": request, "output_text": f"Error: {e}"})
+
 if __name__ == "__main__":
-    uvicorn.run(app,host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
